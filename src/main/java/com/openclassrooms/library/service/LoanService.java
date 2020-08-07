@@ -34,16 +34,16 @@ public class LoanService {
         return loanRepository.findAllByUserId(userId).stream().map(loanMapper::toLoanDto).collect(Collectors.toList());
     }
 
-    public LoanDto create(LoanDto loanDto) {
-        Loan loan = loanMapper.toLoan(loanDto);
-        return loanMapper.toLoanDto(loanRepository.save(loan));
-    }
-
-    public LoanDto update(LoanDto loanDto) {
+    public LoanDto createOrUpdate(LoanDto loanDto) {
+        Loan loan;
+        if (loanDto.getId() != null) {
+            loan = loanRepository.findById(loanDto.getId()).orElseThrow(EntityNotFoundException::new);
+        } else {
+            loan = new Loan();
+        }
         Document document = documentRepository.findById(loanDto.getDocument().getId())
                 .orElseThrow(EntityNotFoundException::new);
         User user = userRepository.findById(loanDto.getUser().getId()).orElseThrow(EntityNotFoundException::new);
-        Loan loan = loanRepository.findById(loanDto.getId()).orElseThrow(EntityNotFoundException::new);
         loan.setDocument(document);
         loan.setUser(user);
         loan.setStartDate(loanDto.getStartDate());

@@ -1,7 +1,5 @@
 package com.openclassrooms.library.dto;
 
-import com.openclassrooms.library.entity.Library;
-
 public class ExemplarDto {
 
     private Long id;

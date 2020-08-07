@@ -42,13 +42,13 @@ public class DocumentService {
         return documentMapper.toDocumentDto(documentRepository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 
-    public DocumentDto create(DocumentDto documentDto) {
-        Document document = documentMapper.toDocument(documentDto);
-        return documentMapper.toDocumentDto(documentRepository.save(document));
-    }
-
-    public DocumentDto update(DocumentDto documentDto) { // TODO : photo
-        Document document = documentRepository.findById(documentDto.getId()).orElseThrow(EntityNotFoundException::new);
+    public DocumentDto createOrUpdate(DocumentDto documentDto) {
+        Document document;
+        if (documentDto.getId() != null) {
+            document = documentRepository.findById(documentDto.getId()).orElseThrow(EntityNotFoundException::new);
+        } else {
+            document = new Document();
+        }
         Author author = authorRepository.findById(documentDto.getAuthor().getId()).orElseThrow(EntityNotFoundException::new);
         Publisher publisher = publisherRepository.findById(documentDto.getPublisher().getId()).orElseThrow(EntityNotFoundException::new);
         document.setIsbn(documentDto.getIsbn());
