@@ -16,14 +16,14 @@ public class DocumentDto {
     private LocalDate publicationDate;
     private PublisherDto publisher;
     private AuthorDto author;
-    private EDocumentType type;
-    private EDocumentCategory category;
+    private String type;
+    private String category;
 
     public DocumentDto() {
     }
 
     public DocumentDto(Long id, String title, String isbn, String description, LocalDate publicationDate,
-                       PublisherDto publisher, AuthorDto author, EDocumentType type, EDocumentCategory category) {
+                       PublisherDto publisher, AuthorDto author, String type, String category) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
@@ -91,19 +91,19 @@ public class DocumentDto {
         this.author = author;
     }
 
-    public EDocumentType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(EDocumentType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public EDocumentCategory getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(EDocumentCategory category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 }

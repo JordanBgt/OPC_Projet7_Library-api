@@ -10,6 +10,10 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring", uses = {AuthorMapper.class, PublisherMapper.class})
 public interface DocumentMapper {
 
+    @Mappings({
+            @Mapping(target = "type", source = "type.label"),
+            @Mapping(target = "category", source = "category.label")
+    })
     DocumentDto toDocumentDto(Document document);
 
     default DocumentLightDto toDocumentLightDto(Document document) {
