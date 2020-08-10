@@ -3,10 +3,10 @@ package com.openclassrooms.library.controller;
 import com.openclassrooms.library.dto.LoanDto;
 import com.openclassrooms.library.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -36,7 +36,7 @@ public class LoanController {
         try {
             loanService.delete(id);
             return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
+        } catch (EmptyResultDataAccessException e) {
             return ResponseEntity.notFound().build();
         }
     }

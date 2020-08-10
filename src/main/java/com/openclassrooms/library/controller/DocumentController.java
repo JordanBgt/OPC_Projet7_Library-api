@@ -7,6 +7,7 @@ import com.openclassrooms.library.entity.EDocumentType;
 import com.openclassrooms.library.entity.criteria.DocumentSearch;
 import com.openclassrooms.library.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("api/documents")
@@ -61,7 +61,7 @@ public class DocumentController {
         try {
             documentService.delete(id);
             return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e){
+        } catch (EmptyResultDataAccessException e){
             return ResponseEntity.notFound().build();
         }
     }
