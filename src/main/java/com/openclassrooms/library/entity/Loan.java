@@ -25,18 +25,18 @@ public class Loan {
 
     @OneToOne
     @JoinColumn(nullable = false)
-    private Document document;
+    private Exemplar exemplar;
 
     public Loan() {
     }
 
-    public Loan(Long id, LocalDate startDate, LocalDate endDate, boolean renewed, User user, Document document) {
+    public Loan(Long id, LocalDate startDate, LocalDate endDate, boolean renewed, User user, Exemplar exemplar) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.renewed = renewed;
         this.user = user;
-        this.document = document;
+        this.exemplar = exemplar;
     }
 
     public Long getId() {
@@ -79,11 +79,11 @@ public class Loan {
         this.user = user;
     }
 
-    public Document getDocument() {
-        return document;
+    public Exemplar getExemplar() {
+        return exemplar;
     }
 
-    public void setDocument(Document document) {
-        this.document = document;
+    public void setExemplar(Exemplar exemplar) {
+        this.exemplar = exemplar;
     }
 }

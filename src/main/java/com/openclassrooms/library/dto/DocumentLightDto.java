@@ -3,15 +3,25 @@ package com.openclassrooms.library.dto;
 public class DocumentLightDto {
 
     // TODO : ajouter photo
+    private Long id;
     private String title;
     private String author; // nom + prénom auteur
 
     public DocumentLightDto() {
     }
 
-    public DocumentLightDto(String title, String author) {
+    public DocumentLightDto(Long id, String title, String author) {
+        this.id = id;
         this.title = title;
         this.author = author;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

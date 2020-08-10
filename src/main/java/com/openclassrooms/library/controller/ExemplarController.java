@@ -1,6 +1,7 @@
 package com.openclassrooms.library.controller;
 
 import com.openclassrooms.library.dto.ExemplarDto;
+import com.openclassrooms.library.dto.ExemplarLightDto;
 import com.openclassrooms.library.service.ExemplarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,7 +18,7 @@ public class ExemplarController {
     private ExemplarService exemplarService;
 
     @GetMapping
-    public List<ExemplarDto> getAllExemplarByDocumentId(@RequestParam Long documentId) {
+    public List<ExemplarLightDto> getAllExemplarByDocumentId(@RequestParam Long documentId) {
         return exemplarService.findAllByDocumentId(documentId);
     }
 

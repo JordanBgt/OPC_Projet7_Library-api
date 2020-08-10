@@ -9,18 +9,18 @@ public class LoanDto {
     private LocalDate endDate;
     private boolean renewed;
     private UserLightDto user;
-    private DocumentDto document;
+    private ExemplarLightDto exemplar;
 
     public LoanDto() {
     }
 
-    public LoanDto(Long id, LocalDate startDate, LocalDate endDate, boolean renewed, UserLightDto user, DocumentDto document) {
+    public LoanDto(Long id, LocalDate startDate, LocalDate endDate, boolean renewed, UserLightDto user, ExemplarLightDto exemplar) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.renewed = renewed;
         this.user = user;
-        this.document = document;
+        this.exemplar = exemplar;
     }
 
     public Long getId() {
@@ -63,11 +63,11 @@ public class LoanDto {
         this.user = user;
     }
 
-    public DocumentDto getDocument() {
-        return document;
+    public ExemplarLightDto getExemplar() {
+        return exemplar;
     }
 
-    public void setDocument(DocumentDto document) {
-        this.document = document;
+    public void setExemplar(ExemplarLightDto exemplar) {
+        this.exemplar = exemplar;
     }
 }

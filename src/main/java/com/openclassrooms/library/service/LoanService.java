@@ -1,10 +1,11 @@
 package com.openclassrooms.library.service;
 
 import com.openclassrooms.library.dao.DocumentRepository;
+import com.openclassrooms.library.dao.ExemplarRepository;
 import com.openclassrooms.library.dao.LoanRepository;
 import com.openclassrooms.library.dao.UserRepository;
 import com.openclassrooms.library.dto.LoanDto;
-import com.openclassrooms.library.entity.Document;
+import com.openclassrooms.library.entity.Exemplar;
 import com.openclassrooms.library.entity.Loan;
 import com.openclassrooms.library.entity.User;
 import com.openclassrooms.library.mapper.LoanMapper;
@@ -25,7 +26,7 @@ public class LoanService {
     private LoanMapper loanMapper;
 
     @Autowired
-    private DocumentRepository documentRepository;
+    private ExemplarRepository exemplarRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -41,10 +42,10 @@ public class LoanService {
         } else {
             loan = new Loan();
         }
-        Document document = documentRepository.findById(loanDto.getDocument().getId())
+        Exemplar exemplar = exemplarRepository.findById(loanDto.getExemplar().getId())
                 .orElseThrow(EntityNotFoundException::new);
         User user = userRepository.findById(loanDto.getUser().getId()).orElseThrow(EntityNotFoundException::new);
-        loan.setDocument(document);
+        loan.setExemplar(exemplar);
         loan.setUser(user);
         loan.setStartDate(loanDto.getStartDate());
         loan.setEndDate(loanDto.getEndDate());
