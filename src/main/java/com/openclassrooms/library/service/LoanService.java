@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,19 +40,33 @@ public class LoanService {
         Loan loan;
         if (loanDto.getId() != null) {
             loan = loanRepository.findById(loanDto.getId()).orElseThrow(EntityNotFoundException::new);
+            loan.setStartDate(loanDto.getStartDate());
+            loan.setEndDate(loanDto.getEndDate());
         } else {
             loan = new Loan();
+            loan.setStartDate(LocalDate.now());
+            loan.setEndDate(loan.getStartDate().plusWeeks(4));
         }
         Exemplar exemplar = exemplarRepository.findById(loanDto.getExemplar().getId())
                 .orElseThrow(EntityNotFoundException::new);
         User user = userRepository.findById(loanDto.getUser().getId()).orElseThrow(EntityNotFoundException::new);
         loan.setExemplar(exemplar);
         loan.setUser(user);
-        loan.setStartDate(loanDto.getStartDate());
-        loan.setEndDate(loanDto.getEndDate());
         loan.setRenewed(loanDto.isRenewed());
 
         return loanMapper.toLoanDto(loanRepository.save(loan));
+    }
+
+    public void renew(Long id) throws Exception {
+        Loan loan = loanRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        if (loan.isRenewed()) {
+            // TODO : exception vu que le prêt a déjà été renouvelé une fois
+            throw new Exception("Prêt déjà revouvelé");
+        } else {
+            loan.setRenewed(true);
+            loan.setEndDate(loan.getEndDate().plusWeeks(4));
+            loanRepository.save(loan);
+        }
     }
 
     public void delete(Long loanId) {

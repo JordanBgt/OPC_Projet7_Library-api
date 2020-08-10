@@ -26,6 +26,16 @@ public class LoanController {
         return loanService.createOrUpdate(loanDto);
     }
 
+    @GetMapping("/{id}/renewal")
+    public ResponseEntity<Void> renewLoan(@PathVariable Long id) {
+        try {
+            loanService.renew(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PutMapping("/{id}")
     public LoanDto updateLoan(@RequestBody LoanDto loanDto) {
         return loanService.createOrUpdate(loanDto);
