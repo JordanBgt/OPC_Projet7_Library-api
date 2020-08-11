@@ -1,14 +1,9 @@
 package com.openclassrooms.library.dto;
 
-import com.openclassrooms.library.entity.EDocumentCategory;
-import com.openclassrooms.library.entity.EDocumentType;
-;
-
 import java.time.LocalDate;
 
 public class DocumentDto {
 
-    // TODO : ajouter photo
     private Long id;
     private String title;
     private String isbn;
@@ -18,12 +13,13 @@ public class DocumentDto {
     private AuthorDto author;
     private String type;
     private String category;
+    private PhotoDto photo;
 
     public DocumentDto() {
     }
 
     public DocumentDto(Long id, String title, String isbn, String description, LocalDate publicationDate,
-                       PublisherDto publisher, AuthorDto author, String type, String category) {
+                       PublisherDto publisher, AuthorDto author, String type, String category, PhotoDto photo) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
@@ -33,6 +29,7 @@ public class DocumentDto {
         this.author = author;
         this.type = type;
         this.category = category;
+        this.photo = photo;
     }
 
     public Long getId() {
@@ -105,5 +102,13 @@ public class DocumentDto {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public PhotoDto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(PhotoDto photo) {
+        this.photo = photo;
     }
 }

@@ -3,16 +3,18 @@ package com.openclassrooms.library.dto;
 public class PhotoDto {
 
     private Long id;
-    private String path;
+    private String name;
     private String extension;
+    private String fileToBase64String;
 
     public PhotoDto() {
     }
 
-    public PhotoDto(Long id, String path, String extension) {
+    public PhotoDto(Long id, String name, String extension, String fileToBase64String) {
         this.id = id;
-        this.path = path;
+        this.name = name;
         this.extension = extension;
+        this.fileToBase64String = fileToBase64String;
     }
 
     public Long getId() {
@@ -23,12 +25,12 @@ public class PhotoDto {
         this.id = id;
     }
 
-    public String getPath() {
-        return path;
+    public String getName() {
+        return name;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getExtension() {
@@ -37,5 +39,13 @@ public class PhotoDto {
 
     public void setExtension(String extension) {
         this.extension = extension;
+    }
+
+    public String getFileToBase64String() {
+        return fileToBase64String;
+    }
+
+    public void setFileToBase64String(String fileToBase64String) {
+        this.fileToBase64String = fileToBase64String;
     }
 }

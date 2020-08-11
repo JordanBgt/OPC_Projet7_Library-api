@@ -11,16 +11,16 @@ public class Photo {
     private Long id;
 
     @Column(nullable = false, length = 100)
-    private String path;
+    private String name;
 
     @Column(nullable = false, length = 10)
     private String extension;
 
     public Photo() {}
 
-    public Photo(Long id, String path, String extension) {
+    public Photo(Long id, String name, String extension) {
         this.id = id;
-        this.path = path;
+        this.name = name;
         this.extension = extension;
     }
 
@@ -32,12 +32,12 @@ public class Photo {
         this.id = id;
     }
 
-    public String getPath() {
-        return path;
+    public String getName() {
+        return name;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getExtension() {

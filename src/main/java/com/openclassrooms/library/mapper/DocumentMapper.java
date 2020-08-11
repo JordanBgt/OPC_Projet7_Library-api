@@ -16,13 +16,11 @@ public interface DocumentMapper {
     })
     DocumentDto toDocumentDto(Document document);
 
-    default DocumentLightDto toDocumentLightDto(Document document) {
-        String authorName = document.getAuthor().getFirstName() + ' ' + document.getAuthor().getLastName();
-        return new DocumentLightDto(document.getId(), document.getTitle(), authorName);
-    }
-
     @Mappings({
-            @Mapping(target = "photo", defaultValue = "null")
+            @Mapping(target = "authorFirstName", source = "author.firstName"),
+            @Mapping(target = "authorLastName", source = "author.lastName")
     })
+    DocumentLightDto toDocumentLightDto(Document document);
+
     Document toDocument(DocumentDto documentDto);
 }
