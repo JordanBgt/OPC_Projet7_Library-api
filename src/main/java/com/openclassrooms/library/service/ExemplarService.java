@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +43,7 @@ public class ExemplarService {
             exemplar.setReference(exemplarDto.getReference());
         } else {
             exemplar = new Exemplar();
-            exemplar.setReference(generateReference(document.getType(), document.getTitle()));
+            exemplar.setReference(generateReference(document.getType(), document.getIsbn()));
         }
         exemplar.setDocument(document);
         exemplar.setLibrary(library);
@@ -62,8 +63,9 @@ public class ExemplarService {
         exemplarRepository.deleteById(id);
     }
 
-    private String generateReference(EDocumentType type, String title) {
+    private String generateReference(EDocumentType type, String isbn) {
         Long timestamp = new Date().getTime();
-        return type + "_" + title + "_" + timestamp;
+        isbn = isbn.replace("-", "");
+        return type + "_" + isbn + "_" + timestamp;
     }
 }

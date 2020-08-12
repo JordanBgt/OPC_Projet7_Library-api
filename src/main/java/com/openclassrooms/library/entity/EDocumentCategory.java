@@ -7,7 +7,8 @@ public enum EDocumentCategory {
     TECHNOLOGY("Informatique"),
     SCIENCE_FICTION("Science-Fiction"),
     NOVEL("Roman"),
-    LITERATURE("Littérature");
+    LITERATURE("Littérature"),
+    THRILLER("Thriller");
 
     private final String label;
     private static final Map<String, EDocumentCategory> mapLabel = new HashMap<>();

@@ -15,13 +15,13 @@ public class DocumentSearch {
     public DocumentSearch() {
     }
 
-    public DocumentSearch(String title, String isbn, String authorLastName, String publisherName, EDocumentType type, EDocumentCategory category) {
+    public DocumentSearch(String title, String isbn, String authorLastName, String publisherName, String type, String category) {
         this.title = title;
         this.isbn = isbn;
         this.authorLastName = authorLastName;
         this.publisherName = publisherName;
-        this.type = type;
-        this.category = category;
+        this.type = EDocumentType.get(type);
+        this.category = EDocumentCategory.get(category);
     }
 
     public String getTitle() {
