@@ -10,4 +10,5 @@ import java.util.List;
 public interface LoanRepository extends CrudRepository<Loan, Long> {
 
     List<Loan> findAllByUserId(Long userId);
+    Loan findByExemplarId(Long exemplarId);
 }

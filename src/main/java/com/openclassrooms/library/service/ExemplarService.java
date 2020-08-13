@@ -3,12 +3,10 @@ package com.openclassrooms.library.service;
 import com.openclassrooms.library.dao.DocumentRepository;
 import com.openclassrooms.library.dao.ExemplarRepository;
 import com.openclassrooms.library.dao.LibraryRepository;
+import com.openclassrooms.library.dao.LoanRepository;
 import com.openclassrooms.library.dto.ExemplarDto;
 import com.openclassrooms.library.dto.ExemplarLightDto;
-import com.openclassrooms.library.entity.Document;
-import com.openclassrooms.library.entity.EDocumentType;
-import com.openclassrooms.library.entity.Exemplar;
-import com.openclassrooms.library.entity.Library;
+import com.openclassrooms.library.entity.*;
 import com.openclassrooms.library.mapper.ExemplarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +30,9 @@ public class ExemplarService {
 
     @Autowired
     private LibraryRepository libraryRepository;
+
+    @Autowired
+    private LoanRepository loanRepository;
 
     public ExemplarDto createOrUpdate(ExemplarDto exemplarDto) {
         Exemplar exemplar;
@@ -56,7 +56,14 @@ public class ExemplarService {
 
     public List<ExemplarLightDto> findAllByDocumentId(Long documentId) {
         return exemplarRepository.findAllByDocumentId(documentId).stream()
-                .map(exemplarMapper::toExemplarLightDto).collect(Collectors.toList());
+                .map(exemplarMapper::toExemplarLightDto)
+                .peek(element -> {
+                    Loan loan = loanRepository.findByExemplarId(element.getId());
+                    if (loan != null) {
+                        element.setLoanEndDate(loan.getEndDate());
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     public void delete(Long id) {
