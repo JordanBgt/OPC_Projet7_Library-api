@@ -6,6 +6,8 @@ import com.openclassrooms.library.entity.EDocumentCategory;
 import com.openclassrooms.library.entity.EDocumentType;
 import com.openclassrooms.library.entity.criteria.DocumentSearch;
 import com.openclassrooms.library.service.DocumentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -31,7 +33,7 @@ public class DocumentController {
                                                   @RequestParam(required = false) String type,
                                                   @RequestParam(required = false) String category,
                                                   @RequestParam(defaultValue = "0") Integer page,
-                                                  @RequestParam(defaultValue = "20") Integer size,
+                                                  @RequestParam(defaultValue = "6") Integer size,
                                                   @RequestParam(defaultValue = "title") String sortBy,
                                                   @RequestParam(defaultValue = "ASC") Sort.Direction direction,
                                                   @RequestParam(defaultValue = "false") boolean unpaged) {
