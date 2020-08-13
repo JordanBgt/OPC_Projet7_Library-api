@@ -31,11 +31,12 @@ public class DocumentPredicateBuilder {
     }
 
     private static BooleanExpression isAuthor(String authorName) {
-        return authorName != null ? document.author.lastName.containsIgnoreCase(authorName) : null; // TODO : voir si eq plutôt que contains
+        return authorName != null ? document.author.lastName.containsIgnoreCase(authorName)
+                .or(document.author.firstName.containsIgnoreCase(authorName)) : null;
     }
 
     private static BooleanExpression isPublisher(String publisherName) {
-        return publisherName != null ? document.publisher.name.containsIgnoreCase(publisherName) : null; // TODO : voir si eq plutôt que contains
+        return publisherName != null ? document.publisher.name.containsIgnoreCase(publisherName) : null;
     }
 
     private static BooleanExpression isType(EDocumentType type) {
