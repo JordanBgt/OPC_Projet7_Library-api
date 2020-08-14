@@ -13,7 +13,7 @@ public class User {
     @Column(nullable = false, length = 50)
     private String username;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false, length = 100)
@@ -24,6 +24,13 @@ public class User {
     private ERole role;
 
     public User() {}
+
+    public User(String username, String password, String email, ERole role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
 
     public User(Long id, String username, String password, String email, ERole role) {
         this.id = id;
