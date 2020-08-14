@@ -5,6 +5,7 @@ import com.openclassrooms.library.service.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,26 +17,31 @@ public class LibraryController {
     @Autowired
     private LibraryService libraryService;
 
+    @Secured("ADMIN")
     @GetMapping
     public List<LibraryDto> getAllLibraries() {
         return libraryService.findAll();
     }
 
+    @Secured("ADMIN")
     @GetMapping("/{id}")
     public LibraryDto getLibrary(@PathVariable Long id) {
         return libraryService.findById(id);
     }
 
+    @Secured("ADMIN")
     @PostMapping
     public LibraryDto createLibrary(@RequestBody LibraryDto libraryDto) {
         return libraryService.createOrUpdate(libraryDto);
     }
 
+    @Secured("ADMIN")
     @PutMapping("/{id}")
     public LibraryDto updateLibrary(@RequestBody LibraryDto libraryDto) {
         return libraryService.createOrUpdate(libraryDto);
     }
 
+    @Secured("ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLibrary(@PathVariable Long id) {
         try {
