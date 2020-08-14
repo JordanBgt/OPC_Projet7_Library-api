@@ -6,6 +6,7 @@ import com.openclassrooms.library.service.ExemplarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,16 +28,19 @@ public class ExemplarController {
         return exemplarService.findById(id);
     }
 
+    @Secured("ADMIN")
     @PostMapping
     public ExemplarDto createExemplar(@RequestBody ExemplarDto exemplarDto) {
         return exemplarService.createOrUpdate(exemplarDto);
     }
 
+    @Secured("ADMIN")
     @PutMapping("/{id}")
     public ExemplarDto updateExemplar(@RequestBody ExemplarDto exemplarDto) {
         return exemplarService.createOrUpdate(exemplarDto);
     }
 
+    @Secured("ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExemplar(@PathVariable Long id) {
         try {

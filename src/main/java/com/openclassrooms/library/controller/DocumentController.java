@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -48,16 +49,19 @@ public class DocumentController {
         return documentService.findById(id);
     }
 
+    @Secured("ADMIN")
     @PostMapping
     public DocumentDto createDocument(@RequestBody DocumentDto documentDto) {
         return documentService.createOrUpdate(documentDto);
     }
 
+    @Secured("ADMIN")
     @PutMapping("/{id}")
     public DocumentDto updateDocument(@RequestBody DocumentDto documentDto) {
         return documentService.createOrUpdate(documentDto);
     }
 
+    @Secured("ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
         try {
