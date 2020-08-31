@@ -1,6 +1,8 @@
 package com.openclassrooms.library.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -19,25 +21,27 @@ public class User {
     @Column(nullable = false, length = 100)
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
-    private ERole role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public User() {}
 
-    public User(String username, String password, String email, ERole role) {
-        this.username = username;
-        this.password = password;
+    public User(String username, String password, String email, Set<Role> roles) {
         this.email = email;
-        this.role = role;
+        this.password = password;
+        this.username = username;
+        this.roles = roles;
     }
 
-    public User(Long id, String username, String password, String email, ERole role) {
+    public User(Long id, String username, String password, String email, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -72,11 +76,11 @@ public class User {
         this.email = email;
     }
 
-    public ERole getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(ERole role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

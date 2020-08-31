@@ -2,6 +2,7 @@ package com.openclassrooms.library.model;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 public class SignupRequest {
 
@@ -12,7 +13,7 @@ public class SignupRequest {
     @Email
     private String email;
 
-    private String role;
+    private List<String> role;
 
     @NotBlank
     private String password;
@@ -20,7 +21,7 @@ public class SignupRequest {
     public SignupRequest() {
     }
 
-    public SignupRequest(@NotBlank String username, @NotBlank @Email String email, String role, @NotBlank String password) {
+    public SignupRequest(@NotBlank String username, @NotBlank @Email String email, List<String> role, @NotBlank String password) {
         this.username = username;
         this.email = email;
         this.role = role;
@@ -43,11 +44,11 @@ public class SignupRequest {
         this.email = email;
     }
 
-    public String getRole() {
+    public List<String> getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(List<String> role) {
         this.role = role;
     }
 

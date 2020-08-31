@@ -1,7 +1,9 @@
 package com.openclassrooms.library.controller;
 
+import com.openclassrooms.library.dao.RoleRepository;
 import com.openclassrooms.library.dao.UserRepository;
 import com.openclassrooms.library.entity.ERole;
+import com.openclassrooms.library.entity.Role;
 import com.openclassrooms.library.entity.User;
 import com.openclassrooms.library.model.JwtResponse;
 import com.openclassrooms.library.model.LoginRequest;
@@ -9,6 +11,8 @@ import com.openclassrooms.library.model.MessageResponse;
 import com.openclassrooms.library.model.SignupRequest;
 import com.openclassrooms.library.security.JwtUtils;
 import com.openclassrooms.library.security.UserDetailsImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -33,11 +40,16 @@ import java.util.stream.Collectors;
 @RequestMapping("api/auth")
 public class AuthController {
 
+    Logger log = LoggerFactory.getLogger(AuthController.class);
+
     @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -65,15 +77,14 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        String role = userDetails.getAuthorities().stream()
+        List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList()).get(0);
-
+                .collect(Collectors.toList());
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                role));
+                roles));
     }
 
     /**
@@ -101,18 +112,28 @@ public class AuthController {
                     .body(new MessageResponse("Erreur : l'email est déjà utilisé !"));
         }
 
-        String strRole = signupRequest.getRole();
-        ERole role;
-        if (strRole.equals("ADMIN") || strRole.equals("admin")) {
-            role = ERole.ADMIN;
-        } else if (strRole.equals("USER") || strRole.equals("user")){
-            role = ERole.USER;
+        List<String> strRoles = signupRequest.getRole();
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Erreur : rôle non trouvé !"));
+            roles.add(userRole);
         } else {
-            return ResponseEntity.badRequest()
-                    .body(new MessageResponse("Erreur : le role spécifié n'existe pas"));
+            strRoles.forEach(role -> {
+                if (role.equals("ADMIN") || role.equals("admin")) {
+                    Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                            .orElseThrow(() -> new RuntimeException("Erreur : rôle non trouvé !"));
+                    roles.add(adminRole);
+                } else {
+                    Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                            .orElseThrow(() -> new RuntimeException("Erreur : rôle non trouvé !"));
+                    roles.add(userRole);
+                }
+            });
         }
         User user = new User(signupRequest.getUsername(), encoder.encode(signupRequest.getPassword()),
-                signupRequest.getEmail(), role);
+                signupRequest.getEmail(), roles);
 
         userRepository.save(user);
 

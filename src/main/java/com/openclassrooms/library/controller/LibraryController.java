@@ -17,31 +17,31 @@ public class LibraryController {
     @Autowired
     private LibraryService libraryService;
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @GetMapping
     public List<LibraryDto> getAllLibraries() {
         return libraryService.findAll();
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @GetMapping("/{id}")
     public LibraryDto getLibrary(@PathVariable Long id) {
         return libraryService.findById(id);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public LibraryDto createLibrary(@RequestBody LibraryDto libraryDto) {
         return libraryService.createOrUpdate(libraryDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
     public LibraryDto updateLibrary(@RequestBody LibraryDto libraryDto) {
         return libraryService.createOrUpdate(libraryDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLibrary(@PathVariable Long id) {
         try {

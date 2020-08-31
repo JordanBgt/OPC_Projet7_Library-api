@@ -17,31 +17,31 @@ public class PublisherController {
     @Autowired
     private PublisherService publisherService;
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @GetMapping
     public List<PublisherDto> getAllPublishers() {
         return publisherService.findAll();
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @GetMapping("/{id}")
     public PublisherDto getPublisher(@PathVariable Long id) {
         return publisherService.findById(id);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public PublisherDto createPublisher(@RequestBody PublisherDto publisherDto) {
         return publisherService.createOrUpdate(publisherDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
     public PublisherDto updatePublisher(@RequestBody PublisherDto publisherDto) {
         return publisherService.createOrUpdate(publisherDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePublisher(@PathVariable Long id) {
         try {

@@ -57,6 +57,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                log.info("AUTH OK : " + username);
+                log.info("ROLE : " + userDetails.getAuthorities());
             }
         } catch (Exception e) {
             log.error("Impossible de définir l'authentification de l'utilisateur : " + e);
@@ -76,6 +78,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(7, headerAuth.length());
+        } else {
+            log.info("NO JWT TOKEN");
         }
 
         return null;

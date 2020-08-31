@@ -1,5 +1,7 @@
 package com.openclassrooms.library.model;
 
+import java.util.List;
+
 public class JwtResponse {
 
     private String token;
@@ -7,14 +9,14 @@ public class JwtResponse {
     private Long id;
     private String username;
     private String email;
-    private String role;
+    private List<String> roles;
 
-    public JwtResponse(String token, Long id, String username, String email, String role) {
+    public JwtResponse(String token, Long id, String username, String email, List<String> roles) {
         this.token = token;
         this.id = id;
         this.username = username;
         this.email = email;
-        this.role = role;
+        this.roles = roles;
     }
 
     public String getToken() {
@@ -57,11 +59,11 @@ public class JwtResponse {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

@@ -28,19 +28,19 @@ public class ExemplarController {
         return exemplarService.findById(id);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public ExemplarDto createExemplar(@RequestBody ExemplarDto exemplarDto) {
         return exemplarService.createOrUpdate(exemplarDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
     public ExemplarDto updateExemplar(@RequestBody ExemplarDto exemplarDto) {
         return exemplarService.createOrUpdate(exemplarDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExemplar(@PathVariable Long id) {
         try {

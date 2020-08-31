@@ -17,19 +17,19 @@ public class LoanController {
     @Autowired
     private LoanService loanService;
 
-    @Secured({"ADMIN", "USER"})
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/users/{userId}")
     public List<LoanDto> getAllByUser(@PathVariable Long userId) {
         return loanService.findAllByUserId(userId);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public LoanDto createLoan(@RequestBody LoanDto loanDto) {
         return loanService.createOrUpdate(loanDto);
     }
 
-    @Secured({"ADMIN", "USER"})
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/{id}/renewal")
     public ResponseEntity<Void> renewLoan(@PathVariable Long id) {
         try {
@@ -40,13 +40,13 @@ public class LoanController {
         }
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
     public LoanDto updateLoan(@RequestBody LoanDto loanDto) {
         return loanService.createOrUpdate(loanDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLoan(@PathVariable Long id) {
         try {

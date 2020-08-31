@@ -1,6 +1,6 @@
 package com.openclassrooms.library.dto;
 
-import com.openclassrooms.library.entity.ERole;
+import java.util.List;
 
 public class UserDTo {
 
@@ -8,17 +8,17 @@ public class UserDTo {
     private String username;
     private String password;
     private String email;
-    private ERole role;
+    private List<RoleDto> roles;
 
     public UserDTo() {
     }
 
-    public UserDTo(Long id, String username, String password, String email, ERole role) {
+    public UserDTo(Long id, String username, String password, String email, List<RoleDto> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -53,11 +53,11 @@ public class UserDTo {
         this.email = email;
     }
 
-    public ERole getRole() {
-        return role;
+    public List<RoleDto> getRoles() {
+        return roles;
     }
 
-    public void setRole(ERole role) {
-        this.role = role;
+    public void setRoles(List<RoleDto> roles) {
+        this.roles = roles;
     }
 }

@@ -1,6 +1,6 @@
 package com.openclassrooms.library.entity;
 
 public enum ERole {
-    ADMIN,
-    USER
+    ROLE_ADMIN,
+    ROLE_USER
 }

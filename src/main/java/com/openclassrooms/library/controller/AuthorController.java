@@ -17,31 +17,31 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @GetMapping
     public List<AuthorDto> getAllAuthors() {
         return authorService.findAll();
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @GetMapping("/{id}")
     public AuthorDto getAuthor(@PathVariable Long id) {
         return authorService.findById(id);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public AuthorDto createAuthor(@RequestBody AuthorDto authorDto) {
         return authorService.createOrUpdate(authorDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
     public AuthorDto updateAuthor(@RequestBody AuthorDto authorDto) {
         return authorService.createOrUpdate(authorDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
         try {

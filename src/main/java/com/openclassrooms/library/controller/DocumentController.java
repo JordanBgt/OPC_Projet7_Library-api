@@ -49,19 +49,19 @@ public class DocumentController {
         return documentService.findById(id);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public DocumentDto createDocument(@RequestBody DocumentDto documentDto) {
         return documentService.createOrUpdate(documentDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
     public DocumentDto updateDocument(@RequestBody DocumentDto documentDto) {
         return documentService.createOrUpdate(documentDto);
     }
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
         try {

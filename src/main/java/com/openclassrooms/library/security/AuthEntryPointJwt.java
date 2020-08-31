@@ -33,6 +33,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                          AuthenticationException e) throws IOException {
         log.error("Défaut d'autorisation : {}", e.getMessage());
+        log.info("HEADER " + httpServletRequest.getHeader("Authorization"));
         httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Erreur : non autorisé");
     }
 }
