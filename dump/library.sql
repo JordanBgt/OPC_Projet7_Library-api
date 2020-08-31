@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Aug 12, 2020 at 01:01 PM
+-- Generation Time: Aug 31, 2020 at 02:57 PM
 -- Server version: 5.7.26
--- PHP Version: 7.1.32
+-- PHP Version: 7.4.2
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -149,6 +149,15 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
+(2),
+(2),
+(2),
+(2),
+(2),
+(2),
+(2),
+(2),
+(2),
 (55),
 (55),
 (55),
@@ -250,6 +259,26 @@ INSERT INTO `publisher` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`id`, `name`) VALUES
+(0, 'ROLE_ADMIN'),
+(1, 'ROLE_USER');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -257,10 +286,35 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `role` varchar(10) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `email`, `password`, `username`) VALUES
+(1, 'user3@email.com', '$2a$10$SPcfnXwG529axDKfrwPpr.zWEYn8Q3MvUIpzRQKm1jH48ZO4P7IY2', 'user3');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_role`
+--
+
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `user_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_role`
+--
+
+INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
+(1, 1);
 
 --
 -- Indexes for dumped tables
@@ -316,10 +370,23 @@ ALTER TABLE `publisher`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_role`
+--
+ALTER TABLE `user_role`
+  ADD PRIMARY KEY (`user_id`,`role_id`),
+  ADD KEY `FKa68196081fvovjhkek5m97n3y` (`role_id`);
 
 --
 -- Constraints for dumped tables
@@ -346,6 +413,13 @@ ALTER TABLE `exemplar`
 ALTER TABLE `loan`
   ADD CONSTRAINT `FKfyjd7wjh8wose8rsu6x7ddvb5` FOREIGN KEY (`exemplar_id`) REFERENCES `exemplar` (`id`),
   ADD CONSTRAINT `FKxxm1yc1xty3qn1pthgj8ac4f` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `user_role`
+--
+ALTER TABLE `user_role`
+  ADD CONSTRAINT `FK859n2jvi8ivhui0rl0esws6o` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
