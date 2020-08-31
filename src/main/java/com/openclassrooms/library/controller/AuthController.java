@@ -40,8 +40,6 @@ import java.util.stream.Collectors;
 @RequestMapping("api/auth")
 public class AuthController {
 
-    Logger log = LoggerFactory.getLogger(AuthController.class);
-
     @Autowired
     AuthenticationManager authenticationManager;
 

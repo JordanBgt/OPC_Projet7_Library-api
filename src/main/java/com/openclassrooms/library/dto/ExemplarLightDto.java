@@ -8,15 +8,17 @@ public class ExemplarLightDto {
     private String reference;
     private LibraryDto library;
     private LocalDate loanEndDate;
+    private String documentTitle;
 
     public ExemplarLightDto() {
     }
 
-    public ExemplarLightDto(Long id, String reference, LibraryDto library, LocalDate loanEndDate) {
+    public ExemplarLightDto(Long id, String reference, LibraryDto library, LocalDate loanEndDate, String documentTitle) {
         this.id = id;
         this.reference = reference;
         this.library = library;
         this.loanEndDate = loanEndDate;
+        this.documentTitle = documentTitle;
     }
 
     public Long getId() {
@@ -49,5 +51,13 @@ public class ExemplarLightDto {
 
     public void setLoanEndDate(LocalDate loanEndDate) {
         this.loanEndDate = loanEndDate;
+    }
+
+    public String getDocumentTitle() {
+        return documentTitle;
+    }
+
+    public void setDocumentTitle(String documentTitle) {
+        this.documentTitle = documentTitle;
     }
 }
