@@ -23,20 +23,24 @@ public class Loan {
     @JoinColumn(nullable = false)
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Exemplar exemplar;
+
+    @Enumerated(EnumType.STRING)
+    private ELoanState state;
 
     public Loan() {
     }
 
-    public Loan(Long id, LocalDate startDate, LocalDate endDate, boolean renewed, User user, Exemplar exemplar) {
+    public Loan(Long id, LocalDate startDate, LocalDate endDate, boolean renewed, User user, Exemplar exemplar, ELoanState state) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.renewed = renewed;
         this.user = user;
         this.exemplar = exemplar;
+        this.state = state;
     }
 
     public Long getId() {
@@ -85,5 +89,13 @@ public class Loan {
 
     public void setExemplar(Exemplar exemplar) {
         this.exemplar = exemplar;
+    }
+
+    public ELoanState getState() {
+        return state;
+    }
+
+    public void setState(ELoanState state) {
+        this.state = state;
     }
 }

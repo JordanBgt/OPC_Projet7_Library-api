@@ -17,10 +17,16 @@ public class LoanController {
     @Autowired
     private LoanService loanService;
 
+    @Secured("ROLE_ADMIN")
+    @GetMapping
+    public List<LoanDto> getAllLoans() {
+        return loanService.findAll();
+    }
+
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/users/{userId}")
     public List<LoanDto> getAllByUser(@PathVariable Long userId) {
-        return loanService.findAllByUserId(userId);
+        return loanService.findAllPendingByUserId(userId);
     }
 
     @GetMapping("/ended")
@@ -43,6 +49,13 @@ public class LoanController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/{id}/return")
+    public ResponseEntity<Void> returnDocument(@PathVariable Long id) {
+        loanService.returnDocument(id);
+        return ResponseEntity.noContent().build();
     }
 
     @Secured("ROLE_ADMIN")

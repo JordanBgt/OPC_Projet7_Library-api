@@ -5,6 +5,7 @@ import com.openclassrooms.library.dao.ExemplarRepository;
 import com.openclassrooms.library.dao.LoanRepository;
 import com.openclassrooms.library.dao.UserRepository;
 import com.openclassrooms.library.dto.LoanDto;
+import com.openclassrooms.library.entity.ELoanState;
 import com.openclassrooms.library.entity.Exemplar;
 import com.openclassrooms.library.entity.Loan;
 import com.openclassrooms.library.entity.User;
@@ -32,8 +33,12 @@ public class LoanService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<LoanDto> findAllByUserId(Long userId) {
-        return loanRepository.findAllByUserId(userId).stream().map(loanMapper::toLoanDto).collect(Collectors.toList());
+    public List<LoanDto> findAll() {
+        return loanMapper.toListLoanDto(loanRepository.findAll());
+    }
+
+    public List<LoanDto> findAllPendingByUserId(Long userId) {
+        return loanRepository.findAllByUserIdAndState(userId, ELoanState.PENDING).stream().map(loanMapper::toLoanDto).collect(Collectors.toList());
     }
 
     public List<LoanDto> findAllEndedLoans() {
@@ -57,6 +62,7 @@ public class LoanService {
         loan.setExemplar(exemplar);
         loan.setUser(user);
         loan.setRenewed(loanDto.isRenewed());
+        loan.setState(ELoanState.PENDING);
 
         return loanMapper.toLoanDto(loanRepository.save(loan));
     }
@@ -71,6 +77,12 @@ public class LoanService {
             loan.setEndDate(loan.getEndDate().plusWeeks(4));
             loanRepository.save(loan);
         }
+    }
+
+    public void returnDocument(Long id) {
+        Loan loan = loanRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        loan.setState(ELoanState.FINISHED);
+        loanRepository.save(loan);
     }
 
     public void delete(Long loanId) {
