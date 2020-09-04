@@ -36,6 +36,10 @@ public class LoanService {
         return loanRepository.findAllByUserId(userId).stream().map(loanMapper::toLoanDto).collect(Collectors.toList());
     }
 
+    public List<LoanDto> findAllEndedLoans() {
+        return loanRepository.findAllEndedLoans().stream().map(loanMapper::toLoanDto).collect(Collectors.toList());
+    }
+
     public LoanDto createOrUpdate(LoanDto loanDto) {
         Loan loan;
         if (loanDto.getId() != null) {

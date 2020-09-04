@@ -23,6 +23,11 @@ public class LoanController {
         return loanService.findAllByUserId(userId);
     }
 
+    @GetMapping("/ended")
+    public List<LoanDto> getAllEndedLoans() {
+        return loanService.findAllEndedLoans();
+    }
+
     @Secured("ROLE_ADMIN")
     @PostMapping
     public LoanDto createLoan(@RequestBody LoanDto loanDto) {
