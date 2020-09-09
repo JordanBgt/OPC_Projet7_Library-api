@@ -13,9 +13,7 @@ public interface LoanRepository extends CrudRepository<Loan, Long> {
 
     List<Loan> findAll();
 
-    List<Loan> findAllByUserIdAndState(Long userId, ELoanState state);
-
-    Loan findByExemplarIdAndState(Long exemplarId, ELoanState state);
+    List<Loan> findAllByUserIdAndStateOrderByEndDateAsc(Long userId, ELoanState state);
 
     @Query(value = "SELECT * FROM loan WHERE end_date < CURDATE()", nativeQuery = true)
     List<Loan> findAllEndedLoans();

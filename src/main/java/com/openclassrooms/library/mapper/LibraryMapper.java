@@ -8,5 +8,4 @@ import org.mapstruct.Mapper;
 public interface LibraryMapper {
 
     LibraryDto toLibraryDto(Library library);
-    Library toLibrary(LibraryDto libraryDto);
 }

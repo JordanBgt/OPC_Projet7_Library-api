@@ -21,6 +21,4 @@ public interface DocumentMapper {
             @Mapping(target = "authorLastName", source = "author.lastName")
     })
     DocumentLightDto toDocumentLightDto(Document document);
-
-    Document toDocument(DocumentDto documentDto);
 }

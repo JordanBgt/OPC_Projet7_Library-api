@@ -1,6 +1,5 @@
 package com.openclassrooms.library.service;
 
-import com.openclassrooms.library.dao.DocumentRepository;
 import com.openclassrooms.library.dao.ExemplarRepository;
 import com.openclassrooms.library.dao.LoanRepository;
 import com.openclassrooms.library.dao.UserRepository;
@@ -38,7 +37,7 @@ public class LoanService {
     }
 
     public List<LoanDto> findAllPendingByUserId(Long userId) {
-        return loanRepository.findAllByUserIdAndState(userId, ELoanState.PENDING).stream().map(loanMapper::toLoanDto).collect(Collectors.toList());
+        return loanRepository.findAllByUserIdAndStateOrderByEndDateAsc(userId, ELoanState.PENDING).stream().map(loanMapper::toLoanDto).collect(Collectors.toList());
     }
 
     public List<LoanDto> findAllEndedLoans() {
