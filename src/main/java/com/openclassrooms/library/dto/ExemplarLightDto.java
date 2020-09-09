@@ -13,14 +13,6 @@ public class ExemplarLightDto {
     public ExemplarLightDto() {
     }
 
-    public ExemplarLightDto(Long id, String reference, LibraryDto library, LocalDate loanEndDate, String documentTitle) {
-        this.id = id;
-        this.reference = reference;
-        this.library = library;
-        this.loanEndDate = loanEndDate;
-        this.documentTitle = documentTitle;
-    }
-
     public Long getId() {
         return id;
     }
