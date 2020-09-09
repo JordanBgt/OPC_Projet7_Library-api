@@ -54,11 +54,11 @@ public class ExemplarService {
         return exemplarMapper.toExemplarDto(exemplarRepository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 
-    public List<ExemplarLightDto> findAllByDocumentId(Long documentId) {
+    public List<ExemplarLightDto> findAllPendingByDocumentId(Long documentId) {
         return exemplarRepository.findAllByDocumentId(documentId).stream()
                 .map(exemplarMapper::toExemplarLightDto)
                 .peek(element -> {
-                    Loan loan = loanRepository.findByExemplarId(element.getId());
+                    Loan loan = loanRepository.findByExemplarIdAndState(element.getId(), ELoanState.PENDING);
                     if (loan != null) {
                         element.setLoanEndDate(loan.getEndDate());
                     }

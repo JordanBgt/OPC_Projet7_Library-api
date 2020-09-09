@@ -20,7 +20,7 @@ public class ExemplarController {
 
     @GetMapping
     public List<ExemplarLightDto> getAllExemplarByDocumentId(@RequestParam Long documentId) {
-        return exemplarService.findAllByDocumentId(documentId);
+        return exemplarService.findAllPendingByDocumentId(documentId);
     }
 
     @GetMapping("/{id}")
