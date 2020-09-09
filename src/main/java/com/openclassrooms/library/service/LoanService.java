@@ -78,7 +78,7 @@ public class LoanService {
         }
     }
 
-    public void returnDocument(Long id) {
+    public void returnExemplar(Long id) {
         Loan loan = loanRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         loan.setState(ELoanState.FINISHED);
         loanRepository.save(loan);
