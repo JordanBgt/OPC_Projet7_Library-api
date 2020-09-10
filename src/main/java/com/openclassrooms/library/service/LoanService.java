@@ -17,6 +17,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service to manage loans
+ *
+ * @see Loan
+ * @see LoanDto
+ * @see LoanRepository
+ * @see LoanMapper
+ * @see UserRepository
+ * @see ExemplarRepository
+ */
 @Service
 public class LoanService {
 
@@ -32,18 +42,46 @@ public class LoanService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Method to find all loans
+     *
+     * @return a list of loans
+     * @see LoanRepository#findAll()
+     */
     public List<LoanDto> findAll() {
         return loanMapper.toListLoanDto(loanRepository.findAll());
     }
 
+    /**
+     * Method to find all current loans for a user (only loans with PENDING state). Loans order by end date ASC
+     *
+     * @param userId id of the user for whom we are looking for loans
+     *
+     * @return a list of loans
+     * @see LoanRepository#findAllByUserIdAndStateOrderByEndDateAsc(Long, ELoanState)
+     */
     public List<LoanDto> findAllPendingByUserId(Long userId) {
         return loanRepository.findAllByUserIdAndStateOrderByEndDateAsc(userId, ELoanState.PENDING).stream().map(loanMapper::toLoanDto).collect(Collectors.toList());
     }
 
+    /**
+     * Method to get all ended loans (only loans with FINISHED state)
+     *
+     * @return a list of loans
+     * @see LoanRepository#findAllEndedLoans()
+     */
     public List<LoanDto> findAllEndedLoans() {
         return loanRepository.findAllEndedLoans().stream().map(loanMapper::toLoanDto).collect(Collectors.toList());
     }
 
+    /**
+     * Method to create or update a loan
+     *
+     * @param loanDto the loan to save
+     *
+     * @return the saved loan
+     * @see LoanRepository#save(Object)
+     */
     public LoanDto createOrUpdate(LoanDto loanDto) {
         Loan loan;
         if (loanDto.getId() != null) {
@@ -66,11 +104,18 @@ public class LoanService {
         return loanMapper.toLoanDto(loanRepository.save(loan));
     }
 
+    /**
+     * Method to extend a loan
+     * @param id id of the loan to extend
+     *
+     * @throws Exception if the loan has already been extended
+     * @see LoanRepository#save(Object)
+     */
     public void renew(Long id) throws Exception {
         Loan loan = loanRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         if (loan.isRenewed()) {
-            // TODO : exception vu que le prêt a déjà été renouvelé une fois
-            throw new Exception("Prêt déjà revouvelé");
+            // TODO : créer une exception
+            throw new Exception("Le prêt a déjà été renouvelé une fois");
         } else {
             loan.setRenewed(true);
             loan.setEndDate(loan.getEndDate().plusWeeks(4));
@@ -78,12 +123,23 @@ public class LoanService {
         }
     }
 
+    /**
+     * Method end a loan
+     *
+     * @param id id of the loan to end
+     * @see LoanRepository#save(Object)
+     */
     public void returnExemplar(Long id) {
         Loan loan = loanRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         loan.setState(ELoanState.FINISHED);
         loanRepository.save(loan);
     }
 
+    /**
+     * Method to delete a loan by its id
+     *
+     * @param loanId id of the loan to delete
+     */
     public void delete(Long loanId) {
         loanRepository.deleteById(loanId);
     }

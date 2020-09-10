@@ -11,6 +11,14 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Method to manage libraries
+ *
+ * @see Library
+ * @see LibraryDto
+ * @see LibraryMapper
+ * @see LibraryRepository
+ */
 @Service
 public class LibraryService {
 
@@ -20,14 +28,37 @@ public class LibraryService {
     @Autowired
     private LibraryMapper libraryMapper;
 
+    /**
+     * Method to find all libraries
+     *
+     * @return a list of libraries
+     * @see LibraryRepository#findAll()
+     */
     public List<LibraryDto> findAll() {
         return libraryRepository.findAll().stream().map(libraryMapper::toLibraryDto).collect(Collectors.toList());
     }
 
+
+    /**
+     * Method to get one library by its id
+     *
+     * @param id id of the requested library
+     *
+     * @return a library
+     * @see LibraryRepository#findById(Object)
+     */
     public LibraryDto findById(Long id) {
         return libraryMapper.toLibraryDto(libraryRepository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 
+    /**
+     * Method to create or update a library
+     *
+     * @param libraryDto the library to save
+     *
+     * @return the saved library
+     * @see LibraryRepository#save(Object)
+     */
     public LibraryDto createOrUpdate(LibraryDto libraryDto) {
         Library library;
         if (libraryDto.getId() != null) {
@@ -40,6 +71,12 @@ public class LibraryService {
         return libraryMapper.toLibraryDto(libraryRepository.save(library));
     }
 
+    /**
+     * Method to delete a library by its id
+     *
+     * @param id id of the library to delete
+     * @see LibraryRepository#deleteById(Object)
+     */
     public void delete(Long id) {
         libraryRepository.deleteById(id);
     }

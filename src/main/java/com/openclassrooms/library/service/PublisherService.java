@@ -11,6 +11,14 @@ import javax.persistence.EntityExistsException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service to manage publishers
+ *
+ * @see Publisher
+ * @see PublisherDto
+ * @see PublisherRepository
+ * @see PublisherMapper
+ */
 @Service
 public class PublisherService {
 
@@ -20,14 +28,36 @@ public class PublisherService {
     @Autowired
     private PublisherMapper publisherMapper;
 
+    /**
+     * Method to find all publishers
+     *
+     * @return a list of publishers
+     * @see PublisherRepository#findAll()
+     */
     public List<PublisherDto> findAll() {
         return publisherRepository.findAll().stream().map(publisherMapper::toPublisherDto).collect(Collectors.toList());
     }
 
+    /**
+     * Method to get one publisher by its id
+     *
+     * @param id id of the requested publisher
+     *
+     * @return a publisher
+     * @see PublisherRepository#findById(Object)
+     */
     public PublisherDto findById(Long id) {
         return publisherMapper.toPublisherDto(publisherRepository.findById(id).orElseThrow(EntityExistsException::new));
     }
 
+    /**
+     * Method to create or update a publisher
+     *
+     * @param publisherDto the publisher to save
+     *
+     * @return the saved publisher
+     * @see PublisherRepository#save(Object)
+     */
     public PublisherDto createOrUpdate(PublisherDto publisherDto) {
         Publisher publisher;
         if (publisherDto.getId() != null) {
@@ -40,6 +70,12 @@ public class PublisherService {
         return publisherMapper.toPublisherDto(publisherRepository.save(publisher));
     }
 
+    /**
+     * Method to delete a publisher by its id
+     *
+     * @param id id of the publisher to delete
+     * @see PublisherRepository#deleteById(Object)
+     */
     public void delete(Long id) {
         publisherRepository.deleteById(id);
     }
