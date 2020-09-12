@@ -54,10 +54,12 @@ public class LoanController {
 
     /**
      * Method to get all ended loans
+     * Only an admin can access this resource
      *
      * @return a list of loans
      * @see LoanService#findAllEndedLoans()
      */
+    @Secured("ROLE_ADMIN")
     @GetMapping("/ended")
     public List<LoanDto> getAllEndedLoans() {
         return loanService.findAllEndedLoans();
